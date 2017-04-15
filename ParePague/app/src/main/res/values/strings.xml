@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Pare e Pague</string>
+    <string name="codigo_do_cupom">Código do cupom:</string>
+    <string name="end">Finalizar</string>
+    <string name="clear">Limpar</string>
+    <string name="cell">Telefone</string>
+    <string name="connect">Conectar</string>
 </resources>

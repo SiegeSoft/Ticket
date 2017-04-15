@@ -1,18 +1,214 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.studiostorquato.pareepague.MainActivity">
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-</android.support.constraint.ConstraintLayout>
+<LinearLayout android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/background"
+            android:elevation="15dp"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+                <ImageView
+                    android:layout_width="74dp"
+                    android:layout_height="86dp"
+                    android:src="@drawable/troyaazulm"
+                    android:layout_gravity="center"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="3dp"
+                    android:background="@color/white" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/codigo_do_cupom"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/txtViewCodTicket"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="5dp"
+                        android:text="000"
+                        android:textColor="@color/white"
+                        android:textStyle="bold"
+                        android:singleLine="true"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/hr" />
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@color/background2"
+                android:padding="30dp" >
+
+                <TextView
+                    android:id="@+id/placa"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:text="Digite a placa:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editTextSign"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/placa"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="center"
+                    android:hint="Placa"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:id="@+id/txtEndereco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextSign"
+                    android:layout_marginTop="40dp"
+                    android:padding="5dp"
+                    android:text="Digite o Endereço:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editTextAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtEndereco"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="center"
+                    android:hint="Endereço"
+                    android:padding="10dp" />
+
+
+                <TextView
+                    android:id="@+id/txtTelefone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/editTextAddress"
+                    android:layout_marginTop="40dp"
+                    android:padding="5dp"
+                    android:text="Digite o telefone:"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/editTextPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txtTelefone"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/edittext_style"
+                    android:gravity="center"
+                    android:hint="@string/cell"
+                    android:padding="10dp" />
+
+            </RelativeLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="@color/hr" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:background="@color/background"
+            android:elevation="25dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center"
+                android:background="@color/background"
+                >
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/background"
+                    android:onClick="clearTicket"
+                    android:padding="40dp"
+                    android:text="@string/clear"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@color/background"
+                    android:onClick="endTicket"
+                    android:padding="40dp"
+                    android:text="@string/end"
+                    android:textColor="@color/hr2"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</ScrollView>
+
+
+
+
