@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -90,9 +89,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:text="Digite a placa:"
-                    android:textSize="20sp"
-                    android:textStyle="bold" />
+                    android:text="Digite a placa:"/>
+
+
 
                 <EditText
                     android:id="@+id/editTextSign"
@@ -142,6 +141,7 @@
                     android:textStyle="bold" />
 
                 <EditText
+                    android:inputType="number"
                     android:id="@+id/editTextPhone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -208,7 +208,4 @@
 </LinearLayout>
 
 </ScrollView>
-
-
-
 
