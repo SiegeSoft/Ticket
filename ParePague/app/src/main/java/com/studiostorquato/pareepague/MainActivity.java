@@ -16,6 +16,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -86,9 +89,14 @@ public class MainActivity extends AppCompatActivity {
     String eNsu;
     private ArrayList<BluetoothDevice> mDeviceList = new ArrayList<BluetoothDevice>();
 
-    EditText placa, rua, telefone;
+    EditText placa, rua, valor;
+    float valortotal;
     TextView cod, codAlert;
     String uniqueValue;
+
+    CheckBox bonus_item1, bonus_item2, bonus_item3, bonus_item4;
+
+    public float bonus_value = 0, bonus_espelho = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,16 +105,31 @@ public class MainActivity extends AppCompatActivity {
 
         placa = (EditText) findViewById(R.id.editTextSign);
         rua = (EditText) findViewById(R.id.editTextAddress);
-        telefone = (EditText) findViewById(R.id.editTextPhone);
-
-        Random rand = new Random();
-        int randomNum = rand.nextInt((8 - 3) + 1) + 3;
-        Calendar c = Calendar.getInstance();
-        int seconds = c.get(Calendar.SECOND);
-        int date = c.get(Calendar.DAY_OF_YEAR);
-        uniqueValue = date+""+randomNum+""+seconds;
+        valor = (EditText) findViewById(R.id.editTextValor);
         cod = (TextView) findViewById(R.id.txtViewCodTicket);
-        cod.setText(uniqueValue);
+
+        bonus_item1 = (CheckBox) findViewById(R.id.bonus1);
+        bonus_item2 = (CheckBox) findViewById(R.id.bonus2);
+        bonus_item3 = (CheckBox) findViewById(R.id.bonus3);
+        bonus_item4 = (CheckBox) findViewById(R.id.bonus4);
+
+        valor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String userInput = valor.getText().toString();
+
+                    if (TextUtils.isEmpty(userInput)) {
+                        userInput = "0.00";
+                    } else {
+                        float floatValue = Float.parseFloat(userInput);
+                        userInput = String.format("%.2f",floatValue);
+                    }
+                    valor.setText(userInput);
+                }
+            }
+        });
+
+        generateCupom();
 
 
     }
@@ -114,8 +137,49 @@ public class MainActivity extends AppCompatActivity {
     public void clearTicket(View v){
         placa.setText("");
         rua.setText("");
-        telefone.setText("");
+        valor.setText("");
+        generateCupom();
+    }
 
+    public void OnClickBonus1(View v){
+        if(bonus_item1.isChecked()){
+            bonus_item2.setChecked(false);
+            bonus_item3.setChecked(false);
+            bonus_item4.setChecked(false);
+            bonus_value = 0.50f;
+        }else{
+            bonus_value = 0;
+        }
+    }
+    public void OnClickBonus2(View v){
+        if(bonus_item2.isChecked()){
+            bonus_item1.setChecked(false);
+            bonus_item3.setChecked(false);
+            bonus_item4.setChecked(false);
+            bonus_value = 0.50f;
+        }else{
+            bonus_value = 0;
+        }
+    }
+    public void OnClickBonus3(View v){
+        if(bonus_item3.isChecked()){
+            bonus_item1.setChecked(false);
+            bonus_item2.setChecked(false);
+            bonus_item4.setChecked(false);
+            bonus_value = 1.50f;
+        }else{
+            bonus_value = 0;
+        }
+    }
+    public void OnClickBonus4(View v){
+        if(bonus_item4.isChecked()){
+            bonus_item1.setChecked(false);
+            bonus_item2.setChecked(false);
+            bonus_item3.setChecked(false);
+            bonus_value = 2.00f;
+        }else{
+            bonus_value = 0;
+        }
     }
 
     public void endTicket(View v){
@@ -258,6 +322,15 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void generateCupom(){
+        Random rand = new Random();
+        int randomNum = rand.nextInt((1000 - 3) + 1) + 3;
+        Calendar c = Calendar.getInstance();
+        int seconds = c.get(Calendar.SECOND);
+        int date = c.get(Calendar.YEAR);
+        uniqueValue = date+""+randomNum+""+seconds;
+        cod.setText(uniqueValue);
+    }
 
     public void pesquisarDispositivos(View v) {
         mBluetoothAdapter.startDiscovery();
@@ -393,6 +466,7 @@ public class MainActivity extends AppCompatActivity {
     private void sendData(byte[] bytes) {
         try {
             mConnector.sendData(bytes);
+            generateCupom();
         } catch (P25ConnectionException e) {
             e.printStackTrace();
         }
@@ -401,8 +475,26 @@ public class MainActivity extends AppCompatActivity {
 
     private void printContent() {
 
+        valortotal = Float.parseFloat(String.valueOf(valor.getText()));
+        if(bonus_item1.isChecked()){
+            valortotal += bonus_value;
+        }
+        if(bonus_item2.isChecked()){
+            valortotal += bonus_value;
+        }
+        if(bonus_item3.isChecked()){
+            valortotal += bonus_value;
+        }
+        if(bonus_item4.isChecked()){
+            valortotal += bonus_value;
+        }
+
         /*********** print head*******/
-        String titleStr = "\n\n\n\n+TRÓIA PARK"+"\n\nTICKET DE ENTRADA ANTECIPADO\n\n";
+        String titleStr = "\n\n" +
+                "\n==========================================" +
+                "\nTROIA PARK"+
+                "\n\nTICKET DE ENTRADA ANTECIPADO\n" +
+                "==========================================\n\n";
 
         StringBuilder bodyStr = new StringBuilder();
 
@@ -410,12 +502,16 @@ public class MainActivity extends AppCompatActivity {
         long milis = System.currentTimeMillis();
         String date = DateUtil.timeMilisToString(milis, "dd-MM-yy / HH:mm");
 
-        bodyStr.append("\nCUPOM   : "+ uniqueValue + "\n");
+        bodyStr.append("\nCUPOM     : "+ uniqueValue + "\n");
         bodyStr.append("DATA-HORA : " + date + "\n");
         bodyStr.append("PLACA     : " + placa.getText().toString() + "\n");
         bodyStr.append("RUA       : "+ rua.getText().toString() + "\n");
-        bodyStr.append("FONE      : "+ telefone.getText().toString() + "\n\n\n\n");
-
+        bodyStr.append("Valor     : "+ valor.getText().toString() + "\n\n");
+        if(bonus_value != 0) {
+        bodyStr.append("Credito   : "+ bonus_value + "\n");
+        }
+        bodyStr.append("Total     : "+ valortotal + "\n\n");
+        bodyStr.append("========================================="+"\n\n");
         byte[] titleByte = Printer.printfont(titleStr, FontDefine.FONT_24PX, FontDefine.Align_CENTER,
                 (byte) 0x1A, PocketPos.LANGUAGE_CHINESE);
 
