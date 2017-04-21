@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void endTicket(View v){
-        
+
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.print_layout, null);
@@ -470,6 +470,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (P25ConnectionException e) {
             e.printStackTrace();
         }
+    }
+
+    public void showList(View v){
+        Intent intent = new Intent(this, ListActivity.class);
+        startActivity(intent);
     }
 
 

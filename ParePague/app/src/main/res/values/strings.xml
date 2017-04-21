@@ -10,5 +10,9 @@
     <string name="voltar_home">Home</string>
     <string name="connect">Conectar</string>
 
+
+    <string name="list">Cupons</string>
+    <string name="return_to_home">Voltar para a home</string>
+
 </resources>
 
