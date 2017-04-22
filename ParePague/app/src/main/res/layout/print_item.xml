@@ -91,18 +91,20 @@
                 android:id="@+id/txtTelefone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Telefone: "
+                android:text="Valor total: R$"
                 android:textStyle="bold"
-                android:textSize="15sp"/>
+                android:textSize="18sp"/>
 
             <TextView
-                android:id="@+id/phone"
+                android:id="@+id/totalValue"
                 android:layout_toEndOf="@+id/txtTelefone"
                 android:layout_toRightOf="@+id/txtTelefone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="139888888"
-                android:textSize="15sp"
+                android:text="0,00"
+                android:textStyle="bold"
+                android:layout_marginLeft="3dp"
+                android:textSize="18sp"
                 android:maxLines="1"/>
 
         </RelativeLayout>
@@ -122,6 +124,12 @@
                 android:textSize="15sp"/>
 
             <TextView
+                android:marqueeRepeatLimit="15"
+                android:singleLine="true"
+                android:focusableInTouchMode="true"
+                android:freezesText="true"
+                android:ellipsize="marquee"
+                android:focusable="true"
                 android:id="@+id/address"
                 android:layout_toEndOf="@+id/txtEndereco"
                 android:layout_toRightOf="@+id/txtEndereco"
@@ -134,6 +142,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/valueView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
@@ -143,7 +152,7 @@
                 android:id="@+id/txtValor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Valor: "
+                android:text="Valor: R$ "
                 android:textStyle="bold"
                 android:textSize="15sp"/>
 
@@ -155,11 +164,37 @@
                 android:layout_height="wrap_content"
                 android:text="R$ 0,00"
                 android:textSize="15sp"
+                android:layout_marginLeft="3dp"
                 android:maxLines="1"/>
 
         </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/creditsView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="3dp"
+            android:visibility="gone">
 
+            <TextView
+                android:id="@+id/txtCreditos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Credito: R$ "
+                android:textStyle="bold"
+                android:textSize="15sp"/>
+
+            <TextView
+                android:id="@+id/credits"
+                android:layout_toEndOf="@+id/txtCreditos"
+                android:layout_toRightOf="@+id/txtCreditos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="15sp"
+                android:maxLines="1"/>
+
+        </RelativeLayout>
 
     </LinearLayout>
 

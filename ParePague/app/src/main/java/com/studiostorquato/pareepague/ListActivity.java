@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.studiostorquato.pareepague.adapter.ListAdapter;
+import com.studiostorquato.pareepague.connections.ConnectionController;
 import com.studiostorquato.pareepague.model.Ticket;
 
 import java.lang.reflect.Array;
@@ -19,6 +20,7 @@ public class ListActivity extends AppCompatActivity {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private ArrayList<Ticket> tickets = new ArrayList<>();
+
 
 
     @Override
@@ -47,18 +49,8 @@ public class ListActivity extends AppCompatActivity {
 
 
     private ArrayList<Ticket> getTickets(){
-        ArrayList<Ticket> tickets = new ArrayList<>();
-
-        // PEGAR DO SQLITE AO INVES DO EXEMPLO ABAIXO
-        Ticket ticket = new Ticket("25/02/2017", "123456789", "Rua Galeao Coutinho", "0,00", "98888888", "ABCDE-SP");
-        tickets.add(ticket);
-        ticket = new Ticket("25/02/2017", "123456789", "Rua Galeao Coutinho", "0,00", "98888888", "ABCDE-SP");
-        tickets.add(ticket);
-        ticket = new Ticket("25/02/2017", "123456789", "Rua Galeao Coutinho", "0,00", "98888888", "ABCDE-SP");
-        tickets.add(ticket);
-        ticket = new Ticket("25/02/2017", "123456789", "Rua Galeao Coutinho", "0,00", "98888888", "ABCDE-SP");
-        tickets.add(ticket);
-        return tickets;
+        ConnectionController connectionController = new ConnectionController(getApplicationContext());
+        return connectionController.readAllTickets();
     }
 
     public void returnToHome(View v) {

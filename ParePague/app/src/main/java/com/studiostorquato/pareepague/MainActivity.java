@@ -62,6 +62,8 @@ import java.util.ArrayList;
 import java.util.Set;
 
 
+import com.studiostorquato.pareepague.connections.ConnectionController;
+import com.studiostorquato.pareepague.model.Ticket;
 import com.studiostorquato.pareepague.pockdata.PocketPos;
 import com.studiostorquato.pareepague.util.DateUtil;
 import com.studiostorquato.pareepague.util.FontDefine;
@@ -96,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
 
     CheckBox bonus_item1, bonus_item2, bonus_item3, bonus_item4;
 
+    private String date;
+
     public float bonus_value = 0, bonus_espelho = 0;
 
     @Override
@@ -105,13 +109,16 @@ public class MainActivity extends AppCompatActivity {
 
         placa = (EditText) findViewById(R.id.editTextSign);
         rua = (EditText) findViewById(R.id.editTextAddress);
-        valor = (EditText) findViewById(R.id.editTextValor);
+        valor = (EditText) findViewById(R.id.editTextValue);
         cod = (TextView) findViewById(R.id.txtViewCodTicket);
 
         bonus_item1 = (CheckBox) findViewById(R.id.bonus1);
         bonus_item2 = (CheckBox) findViewById(R.id.bonus2);
         bonus_item3 = (CheckBox) findViewById(R.id.bonus3);
         bonus_item4 = (CheckBox) findViewById(R.id.bonus4);
+
+        long milis = System.currentTimeMillis();
+        date = DateUtil.timeMilisToString(milis, "dd-MM-yy / HH:mm");
 
         valor.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override public void onFocusChange(View v, boolean hasFocus) {
@@ -466,10 +473,23 @@ public class MainActivity extends AppCompatActivity {
     private void sendData(byte[] bytes) {
         try {
             mConnector.sendData(bytes);
+            createInformationInSQLite();
             generateCupom();
         } catch (P25ConnectionException e) {
             e.printStackTrace();
         }
+    }
+
+    private void createInformationInSQLite(){
+        Ticket ticket = new Ticket(date, uniqueValue, rua.getText().toString(), valor.getText().toString(), String.valueOf(bonus_value),  placa.getText().toString(), String.valueOf(valortotal));
+        ConnectionController connectionController = new ConnectionController(getApplicationContext());
+        boolean response = connectionController.createTicket(ticket);
+        if(response) {
+            Toast.makeText(this, "Dados salvos com sucesso!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Erro ao salvar dados", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     public void showList(View v){
@@ -504,8 +524,6 @@ public class MainActivity extends AppCompatActivity {
         StringBuilder bodyStr = new StringBuilder();
 
         /******print body********/
-        long milis = System.currentTimeMillis();
-        String date = DateUtil.timeMilisToString(milis, "dd-MM-yy / HH:mm");
 
         bodyStr.append("\nCUPOM     : "+ uniqueValue + "\n");
         bodyStr.append("DATA-HORA : " + date + "\n");

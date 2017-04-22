@@ -10,16 +10,18 @@ public class Ticket {
     String ticket;
     String address;
     String value;
-    String phone;
+    String credits;
     String sign;
+    String total;
 
-    public Ticket(String date, String ticket, String address, String value, String phone, String sign) {
+    public Ticket(String date, String ticket, String address, String value, String credits, String sign, String total) {
         this.date = date;
         this.ticket = ticket;
         this.address = address;
         this.value = value;
-        this.phone = phone;
+        this.credits = credits;
         this.sign = sign;
+        this.total = total;
     }
 
     public String getDate() {
@@ -38,11 +40,15 @@ public class Ticket {
         return value;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getCredits() {
+        return credits;
     }
 
     public String getSign() {
         return sign;
+    }
+
+    public String getTotal() {
+        return total;
     }
 }
